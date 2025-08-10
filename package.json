@@ -1,0 +1,29 @@
+{
+  "name": "listly",
+  "version": "0.1.0",
+  "description": "A lightweight JavaScript class for instant todo lists and CRUD operations - just provide a form and display element ",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DallasGale/Listly.git"
+  },
+  "keywords": [
+    "\"todo\"",
+    "\"crud\"",
+    "\"list\"",
+    "\"frontend\"",
+    "\"vanilla-js\"",
+    "\"lightweight\"",
+    "\"form\"",
+    "\"task-manager\""
+  ],
+  "author": "Dallas Gale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DallasGale/Listly/issues"
+  },
+  "homepage": "https://github.com/DallasGale/Listly#readme"
+}
