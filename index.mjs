@@ -1,62 +1,72 @@
 "use strict";
+import Item from "./item.mjs";
 
-// Requirements
-// - Valid HTML Form Element with inputs
-// - Valid <div id />
-
-// todo Options:
-// - CSS Class
-// - Style prop
-// - With Edit,
-// - With Delete,
-// - With Validation
-// - With Header / Column Name
-//  eg: Name / Importance / Due Date
-//      This will be taken from the label value
-
-
-import Item from './item.mjs'
-
-
+/**
+ * A lightweight class for creating dynamic lists from HTML forms
+ * @class
+ * @example
+ * import Listly from "listly";
+ * const container = document.querySelector("#container")
+ * const form = document.querySelector("#form")
+ * const myList = new Listly(container, form, "groceries")
+ */
 class Listly {
-  constructor(container, form) {
-    this.id = 0;
+  /**
+   * @param {HTMLElement} container
+   * @param {HTMLFormElement} form
+   * @param {string} listName
+   * @throws {Error} When container or form is not a valid DOM element.
+   */
+  constructor(form, container, listName = "list") {
+    this.allItems = [];
     this.container = container;
-    this.allTasks = [];
-    this.form = form
+    this.form = form;
+    this.listName = listName;
+    this.listClass = "listly";
+
+    this.itemId = 0;
+
+    this.form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      console.log("listly submitting", e);
+      this.addItem(e.target);
+    });
   }
 
-  addItem(target) {
-    
-    const formData = new FormData(target)
-    console.log("formData: ", ...formData)
-    // Form Data needs to be spread so we can access the array including the name/value input
-    // Each array is a field
-    // eg ['fieldId', fieldValue]
-    // const task = new Task(this.id, name, importance, false);
-    const task = new Item(this.id, [...formData]);
-    console.log({task})
-    this.allTasks.push(task)
-    this.id++
-    // console.log("Adding task: ", task)
-    // console.log("All tasks: ", this.allTasks)
-    
-    this.render();
-    return task;
-  }
-
-
+  /**
+   * A static method that loops through the array of items and constructs the
+   * html for the container.
+   * @returns html
+   */
   render() {
-    const html = this.allTasks.map(task =>  `
-      <li id="${task.id}">
-        ${task.formData.map((e) => `
-          <div>${e[0]}</div>
-          <div>${e[1]}</div>
-          `).join("")}
-      </li>
-    `).join("")
-    this.container.innerHTML = html
+    const html = `
+      <ul id="${this.listName}-list" class="${this.listClass}">
+        ${this.allItems.map(task => `
+          <li id="taskly-item-${task.id}">
+            ${task.formData.map(e => `
+              <div class="taskly--field">
+                <div class="taskly--item-field-name">${e[0]}</div>
+                <div class="taskly--item-field-value">${e[1]}</div>
+              </div>
+              `).join("")}
+          </li>
+        `).join("")}
+      </ul>
+    `;
+    this.container.innerHTML = html;
   }
-}
 
-export default Listly
+  /**
+   * a method that pushes an item to an arroy of items.
+   * @param {EventTarget} target
+   */
+  addItem(target) {
+    const formData = new FormData(target);
+    const item = new Item(this.itemId, [...formData]);
+    this.allItems.push(item);
+    this.itemId++;
+    this.render();
+  }
+};
+
+export default Listly;
