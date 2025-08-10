@@ -4,7 +4,9 @@
 // - Valid HTML Form Element with inputs
 // - Valid <div id />
 
-// Options:
+// todo Options:
+// - CSS Class
+// - Style prop
 // - With Edit,
 // - With Delete,
 // - With Validation
@@ -24,8 +26,7 @@ class Listly {
     this.form = form
   }
 
-  // static allTasks = [];
-  addTask(target) {
+  addItem(target) {
     
     const formData = new FormData(target)
     console.log("formData: ", ...formData)
