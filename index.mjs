@@ -15,7 +15,7 @@
 //      This will be taken from the label value
 
 
-import Task from './task.mjs'
+import Item from './item.mjs'
 
 
 class Listly {
@@ -34,7 +34,7 @@ class Listly {
     // Each array is a field
     // eg ['fieldId', fieldValue]
     // const task = new Task(this.id, name, importance, false);
-    const task = new Task(this.id, [...formData]);
+    const task = new Item(this.id, [...formData]);
     console.log({task})
     this.allTasks.push(task)
     this.id++
