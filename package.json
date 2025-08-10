@@ -1,7 +1,7 @@
 {
   "name": "listly",
   "version": "0.1.0",
-  "description": "A lightweight JavaScript class for instant todo lists and CRUD operations - just provide a form and display element ",
+  "description": "WIP! - A lightweight JavaScript module for instant todo lists and CRUD operations - just provide a form and container element ",
   "main": "index.js",
   "scripts": {
     "test": "node --test"
