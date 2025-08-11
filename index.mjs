@@ -40,7 +40,7 @@ class Listly {
    */
   render() {
     const html = `
-      <ul id="${this.listName}-list" class="${this.listClass}">
+      <ol id="${this.listName}-list" class="${this.listClass}">
         ${this.allItems.map(task => `
           <li id="taskly-item-${task.id}">
             ${task.formData.map(e => `
@@ -51,7 +51,7 @@ class Listly {
               `).join("")}
           </li>
         `).join("")}
-      </ul>
+      </ol>
     `;
     this.container.innerHTML = html;
   }
