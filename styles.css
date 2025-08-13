@@ -1,0 +1,87 @@
+:root,
+:host {
+  --listly-container-gap: 8px;
+  --listly-item-gap: 16px;
+  --listly-list-inset: 0;
+  --listly-background: #fff;
+  --listly-text-color: #1a1a1a;
+  --listly-border-radius: 8px;
+  --listly-margin: 20px;
+  --listly-padding: 20px;
+  --listly-max-width: 680px;
+  --listly-li-border: 2px dotted #adadad;
+  --listly-li-padding-bottom: 13px;
+  --listly-li-content-padding: 40px;
+}
+.listly {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--listly-container-gap);
+  width: 100%;
+  background: var(--listly-background);
+  color: var(--listly-text-color);
+  border-radius: var(--listly-border-radius);
+  max-width: var(--listly-max-width);
+  margin: var(--listly-margin);
+  padding: var(--listly-padding);
+  margin-inline: auto;
+}
+
+.listly--ol,
+.listly--ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--listly-item-gap);
+  padding-left: var(--listly-list-inset);
+  list-style-position: inside;
+}
+/* ul.listly {
+  list-style-position: outside;
+}
+
+ol.listly {
+  list-style-position: inside;
+} */
+
+.listly--li {
+  border-bottom: var(--listly-li-border);
+  padding-bottom: var(--listly-li-padding-bottom);
+}
+
+.listly,
+.listly--field {
+  display: flex;
+  gap: var(--listly-container-gap);
+  width: 100%;
+}
+
+.listly--li-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+  padding-left: var(--listly-li-content-padding);
+  margin-top: -2.75%;
+}
+
+.listly--header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-left: var(--listly-list-inset);
+}
+
+.listly--header-column {
+  text-align: left;
+  width: 100%;
+}
+
+/* 
+.listly--item {
+  display: flex;
+  gap: var(--listly-container-gap);
+  flex
+
+} */

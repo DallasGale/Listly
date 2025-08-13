@@ -14,6 +14,24 @@ export default [
       sourceType: "module",
     },
     rules: {
+      "@typescript-eslint/semi": "off",
+      "prettier/prettier": [
+        "warn",
+        {
+          trailingComma: "all",
+          semi: true,
+          tabWidth: 2,
+          singleQuote: false,
+          printWidth: 80,
+          endOfLine: "auto",
+          arrowParens: "always",
+          bracketSpacing: true,
+        },
+        {
+          usePrettierrc: true,
+        },
+      ],
+
       // Add any custom overrides here
       "@stylistic/indent": ["error", 2],
       "@stylistic/quotes": ["error", "double"],
