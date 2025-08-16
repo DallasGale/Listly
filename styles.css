@@ -1,87 +1,129 @@
 :root,
 :host {
-  --listly-container-gap: 8px;
-  --listly-item-gap: 16px;
-  --listly-list-inset: 0;
-  --listly-background: #fff;
-  --listly-text-color: #1a1a1a;
-  --listly-border-radius: 8px;
-  --listly-margin: 20px;
-  --listly-padding: 20px;
-  --listly-max-width: 680px;
-  --listly-li-border: 2px dotted #adadad;
-  --listly-li-padding-bottom: 13px;
-  --listly-li-content-padding: 40px;
+  --qwk-cell-gap: 6px;
+  --qwk-actions-gap: 8px;
+  --qwk-actions-mt: 16px;
+  --qwk-list-container-gap: 8px;
+  --qwk-list-item-gap: 16px;
+  --qwk-list-inset: 0;
+  --qwk-list-background: #0f0d0d;
+  --qwk-list-text-color: #dcdcdc;
+  --qwk-list-border-radius: 6px;
+  --qwk-list-margin: 20px;
+  --qwk-list-padding: 20px;
+  --qwk-list-max-width: 680px;
+  --qwk-list-li-border: 2px dotted #adadad;
+  --qwk-list-li-pb: 13px;
+  --qwk-list-li-content-padding: 40px;
+
+  --qwk-header-background: #000000;
 }
-.listly {
+.qwk-button, .qwk-input {
+  background-color: rgb(77, 77, 77);
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px;
+  border-radius: var(--qwk-list-border-radius);
+}
+.qwk-input {
+  width: 100%;
+}
+
+.qwk-list {
   font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--listly-container-gap);
   width: 100%;
-  background: var(--listly-background);
-  color: var(--listly-text-color);
-  border-radius: var(--listly-border-radius);
-  max-width: var(--listly-max-width);
-  margin: var(--listly-margin);
-  padding: var(--listly-padding);
+  color: var(--qwk-list-text-color);
+  border-radius: var(--qwk-list-border-radius);
+  /* max-width: var(--qwk-list-max-width); */
+  margin: var(--qwk-list-margin);
+  padding: var(--qwk-list-padding);
   margin-inline: auto;
 }
 
-.listly--ol,
-.listly--ul {
+.qwk-list--ol,
+.qwk-list--ul {
   display: flex;
   flex-direction: column;
-  gap: var(--listly-item-gap);
-  padding-left: var(--listly-list-inset);
+  gap: var(--qwk-list-item-gap);
+  padding-left: var(--qwk-list-inset);
   list-style-position: inside;
-}
-/* ul.listly {
-  list-style-position: outside;
-}
-
-ol.listly {
-  list-style-position: inside;
-} */
-
-.listly--li {
-  border-bottom: var(--listly-li-border);
-  padding-bottom: var(--listly-li-padding-bottom);
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.listly,
-.listly--field {
+.qwk-list-marker-hidden {
+  ::marker {
+    content: none;
+  }
+  .qwk-list--li-content {
+    margin-top: 0;
+    padding-left: 0;
+  }
+}
+
+.qwk-list--li {
+  background: var(--qwk-list-background);
+  padding: var(--qwk-list-li-pb);
+  border-radius: var(--qwk-list-border-radius);
+}
+
+.qwk-list--field {
   display: flex;
-  gap: var(--listly-container-gap);
+  gap: var(--qwk-list-container-gap);
   width: 100%;
 }
 
-.listly--li-content {
+.qwk-list--li-content {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: space-evenly;
-  padding-left: var(--listly-li-content-padding);
+  padding-left: var(--qwk-list-li-content-padding);
   margin-top: -2.75%;
 }
 
-.listly--header {
+.qwk-list--header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  background-color: var(--qwk-header-background);
+  border-radius: var(--qwk-list-border-radius);
+  margin-bottom: 8px;
+  padding: var(--qwk-list-li-pb);
+  gap: var(--qwk-cell-gap);
+}
+
+.qwk-list--header-column {
+  text-align: left;
+  width: 100%;
+  border-right: 1px solid rgba(255,255,255,0.2);
+  padding: var(--qwk-list-li-pb);
+}
+.qwk-list--header-column:last-of-type {
+  border-right: none;;
+}
+
+.qwk-list--actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--qwk-actions-gap);
+  margin-top: var(--qwk-actions-mt);
+}
+
+#qwk-editable-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--qwk-cell-gap);
+}
+.qwk-form-field-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  padding-left: var(--listly-list-inset);
+  flex-wrap: nowrap;
+  gap: var(--qwk-cell-gap);
 }
-
-.listly--header-column {
-  text-align: left;
-  width: 100%;
-}
-
-/* 
-.listly--item {
-  display: flex;
-  gap: var(--listly-container-gap);
-  flex
-
-} */

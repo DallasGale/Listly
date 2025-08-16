@@ -1,8 +1,8 @@
 class Item {
   constructor(id, formData) {
     this.id = id,
-    this.formData = formData
+    this.formData = formData;
   }
 }
 
-export default Item
+export default Item;
