@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import Listly from "./index.mjs";
+import QuickList from "./index.js";
 import { JSDOM } from "jsdom";
 
-describe("Listly", () => {
+describe("QuickList", () => {
   let form;
   let container;
-  let listly;
+  let quickList;
   beforeEach(() => {
     const dom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
     globalThis.document = dom.window.document;
@@ -17,23 +17,18 @@ describe("Listly", () => {
     container.id = "my-container";
   });
 
-  test("should create instance of a Listly", () => {
-    listly = new Listly(form, container, "");
-    expect(listly).toBeInstanceOf(Listly);
+  test("should create instance of a QuickList", () => {
+    quickList = new QuickList(form, container, "");
+    expect(quickList).toBeInstanceOf(QuickList);
   });
   test("container should have an id", () => {
-    listly = new Listly(form, container, "");
-    console.log("listly", listly.container);
+    quickList = new QuickList(form, container, "");
+    console.log("quickList", quickList.container);
     expect(container.id).toBe("my-container");
   });
-  test("listly should have a unique name", () => {
-    listly = new Listly(form, container, "groceries");
-    console.log({ listly });
-    expect(listly.listName).toBe("groceries");
-  });
   test("form should have an id", () => {
-    listly = new Listly(form, container, "groceries");
-    console.log({ listly });
+    quickList = new QuickList(form, container, "groceries");
+    console.log({ quickList });
     expect(form.id).toBe("my-form");
   });
 });

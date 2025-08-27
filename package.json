@@ -1,7 +1,7 @@
 {
-  "name": "listly",
-  "version": "0.1.4",
-  "description": "WIP! - A lightweight JavaScript module for instant todo lists and CRUD operations - just provide a form and container element ",
+  "name": "quick-list",
+  "version": "0.0.1",
+  "description": "A lightweight JavaScript module for instant todo lists and CRUD operations - just provide a form with inputs and a container element ",
   "main": "index.js",
   "scripts": {
     "test": "vitest"

@@ -37,13 +37,13 @@ class QuickList {
     this.containerEl = containerEl;
     // --------------------------------------------------------------
     // params: { options: ...}
-    this.hasHeader = params.options.hasHeader || false;
-    this.listType = params.options.listType || "ol";
-    this.listId = params.options.listId;
-    this.showMarker = params.options.showMarker || false;
-    this.showActions = params.options.showActions || false;
-    this.showSubmit = params.options.showSubmit || false;
-    this.prefill = params.options.prefill || null;
+    this.hasHeader = params?.options?.hasHeader || false;
+    this.listType = params?.options?.listType || "ol";
+    this.listId = params?.options?.listId;
+    this.showMarker = params?.options?.showMarker || false;
+    this.showActions = params?.options?.showActions || false;
+    this.showSubmit = params?.options?.showSubmit || false;
+    this.prefill = params?.options?.prefill || null;
     // --------------------------------------------------------------
 
     // Local mutating variables
