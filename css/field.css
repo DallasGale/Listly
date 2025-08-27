@@ -1,0 +1,19 @@
+:root {
+  --qwk-field-value-color: #000;
+}
+body.dark {
+  --qwk-field-value-color: #fff;
+}
+
+.qwk--field {
+  display: flex;
+  gap: var(--qwk-container-gap);
+  width: 100%;
+}
+.qwk--item-field-value {
+  font-size: var(--qwk-value-font-size);
+  color: var(--qwk-field-value-color);
+  font-weight: 500;
+  font-family: var(--qwk-font-family);
+  font-size: var(--qwk-value-font-size);
+}

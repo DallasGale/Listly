@@ -1,0 +1,9 @@
+
+.qwk-button {
+  background-color: var(--qwk-input-background);
+  color: var(--qwk-input-color);
+  outline: none;
+  border: none;
+  padding: 10px;
+  border-radius: var(--qwk-border-radius);
+}

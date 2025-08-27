@@ -1,0 +1,50 @@
+
+:root {
+  --qwk-actions-gap: 8px;
+  --qwk-action-remove-icon:  url("../svgs/remove.svg");
+  --qwk-action-edit-icon:  url("../svgs/edit.svg");
+}
+
+body.dark {
+  --qwk-action-remove-icon:  url("../svgs/remove-white.svg");
+  --qwk-action-edit-icon:  url("../svgs/edit-white.svg");
+}
+
+.qwk--actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--qwk-actions-gap);
+  position: absolute;
+  right: 20px;
+  top: 0; 
+}
+.qwk--action-btn {
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0;  
+  margin-top: 12px;
+}
+
+.qwk--action-btn-remove {
+  background: var(--qwk-action-remove-icon) no-repeat center center;
+}
+
+.qwk--action-btn-edit {
+  background: var(--qwk-action-edit-icon) no-repeat center center;
+}
+
+.qwk--action-btn-done {
+  background-color: var(--qwk-green);
+  height: 100%;
+  padding: 8px;
+  border-radius: var(--qwk-border-radius);
+  border: none;
+  height: 29px;
+  font-size: 12px;
+  font-family: var(--qwk-font-family);
+  font-weight: 500;
+  margin-top: 7px;
+}

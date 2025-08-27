@@ -1,0 +1,53 @@
+:root {
+  --qwk-li-count-indent: -20px;
+  --qwk-li-count-size: 20px;
+  --qwk-li-pb: 13px;
+}
+
+
+.qwk--li {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  background: var(--qwk-background);
+  padding: var(--qwk-li-pb);
+  padding-right: 0;
+  border-radius: var(--qwk-border-radius);
+  min-height: var(--qwk-min-row-height);
+  position: relative;
+}
+
+.qwk--li:hover {
+  background-color: var(--qwk-hover-background);
+}
+
+.qwk--li-count {
+  width: var(--qwk-li-count-size);
+  height: var(--qwk-li-count-size);
+  position: absolute;
+  left: var(--qwk-li-count-indent);
+}
+
+.qwk--li-editing {
+  background: var(--qwk-editing-background);
+}
+
+.qwk--li-content {
+  display: flex;
+  flex-direction: row;
+  width: var(--qwk-row-width);
+  justify-content: space-evenly;
+  padding-left: var(--qwk-li-content-padding);
+  margin-top: -2.75%;
+  
+}
+
+.qwk--li:hover .qwk--action-btn {
+  opacity: 1;
+}
+
+.qwk-list-marker-hidden .qwk--li-content {
+    margin-top: 0;
+    padding-left: 0;
+
+}

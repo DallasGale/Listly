@@ -1,0 +1,32 @@
+:root {
+  --qwk-input-background: rgb(255, 255, 255);
+  --qwk-input-editing-border: #00000080;
+}
+
+body.dark {
+  --qwk-input-background: #222222;
+  --qwk-input-editing-border: #ffffff80;
+}
+
+.qwk-input {
+  width: 100%;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: var(--qwk-value-font-size);
+
+  background-color: var(--qwk-input-background);
+  color: var(--qwk-input-color);
+  outline: none;
+  border: none;
+  padding: 10px;
+  border-radius: var(--qwk-border-radius);
+}
+
+.qwk--li-editing  .qwk-input {
+    border-color: var(--qwk-input-editing-border);
+}
+
+.qwk-list .qwk-input {
+  padding: 4px;
+}
