@@ -21,14 +21,15 @@ class QuickList {
    * @param {"ol" | "ul"} params.options.listType
    * @param {boolean} params.options.hasHeader
    * @param {boolean} params.options.showMarker
+   * @param {boolean} params.options.showActions
+   * @param {Array} params.options.prefill
    * @throws {Error} When container or form is not a valid DOM element.
    */
   constructor(...args) {
     let formEl;
     let containerEl;
-    let params;
-
-    [formEl, containerEl, params] = args;
+    let params
+    ;[formEl, containerEl, params] = args;
     if (!params) params = {};
 
     if (formEl && !params.formEl) params.formEl = formEl;
@@ -38,41 +39,48 @@ class QuickList {
     this.containerEl = containerEl;
     this.params = params;
 
-    // Local mutating variables
-    this.headerLabels = [];
-    this.allItems = [];
-    this.itemId = 0;
-
     // Options Params...
     this.hasHeader = params.options.hasHeader || false;
     this.listType = params.options.listType || "ol";
     this.listId = params.options.listId;
     this.showMarker = params.options.showMarker || false;
+    this.showActions = params.options.showActions || false;
+    this.showSubmit = params.options.showSubmit || false;
+    this.prefill = params.options.prefill || null;
+
+    // Local mutating variables
+    this.headerLabels = [];
+    this.allItems = [];
+    this.itemId = 0;
+    this.formInputElements = [];
 
     // Element ClassNames
-    this.removeItemButtonClass = "qwk-button--remove-item";
-    this.editItemButtonClass = "qwk-button--edit-item";
-    this.updateItemButtonClass = "qwk-button--update-item";
+    this.qwkInputFieldClass = ".qwk-form-field";
+    this.removeItemButtonClass = "qwk-list--action-btn-remove";
+    this.editItemButtonClass = "qwk-list--action-btn-edit";
+    this.updateItemButtonClass = "qwk-list--action-btn-done";
     this.submitListButtonClass = "qwk-button--submit-list";
     this.listClass = `qwk-list--${this.listType}`;
 
     // Check for valid form and container elements
     if (
-      params.formEl
-      && params.containerEl
-      && typeof params.formEl === "string"
-      && typeof params.containerEl === "string"
-      && document.querySelector(params.formEl)
-      && document.querySelector(params.containerEl)
+      params.formEl &&
+      params.containerEl &&
+      typeof params.formEl === "string" &&
+      typeof params.containerEl === "string" &&
+      document.querySelector(params.formEl) &&
+      document.querySelector(params.containerEl)
     ) {
-      // console.log("formEl, containerEl are valide");
-
-      // Form Element
-      let form = document.querySelector(params.formEl);
+      // Form submit to addItem
+      const form = document.querySelector(params.formEl);
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         this.addItem(e);
       });
+
+      // Adding input data
+      const inputs = document.querySelectorAll(this.qwkInputFieldClass);
+      this.retrieveFormInputElements(inputs);
 
       // Listeners for action click
       const containerElement = document.querySelector(params.containerEl);
@@ -107,12 +115,13 @@ class QuickList {
     let labels = [];
     let inputData = [];
 
-    // Adding input data
-    const inputs = event.target.querySelectorAll("input");
+    // Add input data
+    const inputs = event.target.querySelectorAll( this.qwkInputFieldClass);
     inputs.forEach((input) => {
-      console.log({input});
+      console.log({input})
       labels.push(input.dataset.qwkInputLabel);
       inputData.push({
+        node: input.nodeName.toLowerCase(),
         attrs: input.attributes,
         name: input.name,
         dataset: input.dataset,
@@ -124,16 +133,16 @@ class QuickList {
     this.headerLabels = labels;
     this.inputTypes = types;
 
-    // Line items: 
-    // const formData = new FormData(event.target);
+    // Line items:
     const item = new Item(this.itemId, [...inputData]);
 
+    console.log({item});
     this.allItems.push(item);
     this.itemId++;
     this.render();
   }
 
-   /**
+  /**
    * a method that pushes an item to an arroy of items.
    * @param {EventTarget} target
    */
@@ -141,7 +150,9 @@ class QuickList {
     let inputData = [];
 
     // Adding input data
-    const inputs = event.target.querySelectorAll("input");
+    // const inputs = event.target.querySelectorAll("input")
+    //  This should be querying class names just like the initial query of the form inputs
+    const inputs = event.target.querySelectorAll(this.qwkInputFieldClass);
     inputs.forEach((input) => {
       console.log({input});
       inputData.push({
@@ -156,11 +167,11 @@ class QuickList {
     const replacedItem = new Item(parseInt(id), [...inputData]);
     this.allItems = this.allItems.map((item) => {
       if (item.id === parseInt(id)) {
-        return {...replacedItem, edit: false}
+        return {...replacedItem, edit: false};
       } else {
         return item;
       }
-    })
+    });
     this.render();
   }
 
@@ -172,7 +183,7 @@ class QuickList {
     const listItem = document.getElementById(`qwk-list-item-${id}`);
     if (listItem) {
       // Filter out the list first...
-      const newList = this.allItems.filter(item => item.id !== parseInt(id));
+      const newList = this.allItems.filter((item) => item.id !== parseInt(id));
       // Remove the DOM element
       this.allItems = newList;
       this.render();
@@ -184,15 +195,13 @@ class QuickList {
    * @param {string} id
    */
   editItem(id) {
-    console.log("1.", "this.itemId", this.itemId, {id})
     const listItem = document.getElementById(`qwk-list-item-${id}`);
     if (listItem) {
       const newList = this.allItems.map((item) => {
         if (item.id === parseInt(id)) {
           item.edit = true;
           return item;
-        }
-        else {
+        } else {
           item.edit = false;
           return item;
         }
@@ -202,46 +211,72 @@ class QuickList {
       this.render();
 
       // editing
-       const editableForm = document.getElementById("qwk-editable-form");
+      const editingContainer = document.querySelector(".editing-container");
+      this.formInputElements.forEach((el) => {
+        console.log({el})
+        editingContainer.appendChild(el)
+      })
+
+      const editableForm = document.getElementById("qwk-editable-form");
       if (editableForm) {
         editableForm.addEventListener("submit", (e) => {
-          e.preventDefault()
-          this.replaceItem(e, id)
-        })
+          e.preventDefault();
+          this.replaceItem(e, id);
+        });
       }
     }
-   
   }
 
-
+  /**
+   * @returns {json}
+   */
   submitList() {
-    let json = []  
-    const listItems = document.querySelectorAll(".qwk-list--li")
+    let json = [];
+    const listItems = document.querySelectorAll(".qwk-list--li");
+    console.log({listItems})
     // console.log({list})
     // let obj = {}
 
     // for each row
     listItems.forEach((item) => {
-    
-
-
       // for each cell
-      const fieldValues = item.querySelectorAll(".qwk-list--item-field-value")
-      let obj = {}
-      fieldValues.forEach((value => {
-        obj.id = item.id
-        obj[`${value.dataset.name}`] = value.textContent
-      }))
-      json.push(obj)
-    })
-    
-    console.log({json})
-
-      // create json from the array
-
-
+      const fieldValues = item.querySelectorAll(".qwk-list--item-field-value");
+      console.log({fieldValues})
+      let obj = {};
+      fieldValues.forEach((value) => {
+        obj.id = item.id;
+        obj[`${value.dataset.name}`] = value.textContent;
+      });
+      json.push(obj);
+    });
   }
 
+  /**
+   * This needs to return all different input elements and then be used inside the 'edit' condition for the html.
+   * @param {HTMLInputElement} el;
+   * @returns {html}
+   */
+  retrieveFormInputElements(el) {
+    let htmlElements = [];
+    el.forEach((e) => htmlElements.push(e.cloneNode(true)));
+    this.formInputElements = htmlElements;
+  }
+
+  // renderCorrectInputElement(editableElements) {
+  //   console.log("this.formInputElements", this.formInputElements)
+  //   // let foundElement;
+  //   // if (editableElement) {
+  //   this.formInputElements.map((el) => {
+  //     // console.log({el}, editableElement.filter.formData)
+  //    editableElements.formData.filter((edit) => {
+  //     if (edit.id === el.id) {
+  //       console.log()return el
+  //     // if (el.id === editableElements.formData.id) {
+  //     //   console.log({el})
+  //     // }})
+  //     // return 
+  //   })
+  // })}
 
   /**
    * A static method that loops through the array of items and constructs the
@@ -252,45 +287,57 @@ class QuickList {
     /** @type {HTMLElement} */
     const container = document.querySelector(this.containerEl);
 
-    const header =
-      `<header class="qwk-list--header">
-        ${this.headerLabels.map(label =>
-          `<div class="qwk-list--header-column">${label}</div>`).join("")}
+    const header = `<header class="qwk-list--header">
+          <div class="qwk-list--header-content">
+          ${this.headerLabels
+            .map(
+              (label) => `<div class="qwk-list--header-column">${label}</div>`
+            )
+            .join("")}
+          </div>
       </header>`;
 
     const li = `${this.allItems.map((item) => `
-      <li class="qwk-list--li" id="qwk-list-item-${item.id}">
-        ${item.edit ? (`
+      <li class="qwk-list--li ${item.edit ? "qwk-list--li-editing" : "qwk-list--li-reading"}" id="qwk-list-item-${item.id}">
+        ${item.edit ? `
           <form id="qwk-editable-form">
-            <div class="qwk-form-field-wrapper">
-            ${item.formData.map(e => `
-              <input 
-                autocomplete="false"
-                id="${e.id}"
-                name="${e.name}"
-                type="${e.type}" 
-                value="${e.value}" 
-                class="qwk-input" />
-              `).join("")}
-              </div>
-            <button type="submit" class="qwk-button qwk-button--update-item" data-id="${item.id}">update</button>
-          </form>`) 
-          : (`
+            <div class="qwk-form-field-wrapper editing-container">
+
+
+           
+
+            </div>
+            <div class="qwk-list--actions">
+              <button type="submit" class="qwk-action-button ${this.updateItemButtonClass}" data-id="${item.id}">DONE</button>
+            </div>
+          </form>`
+            : `
           <div class="qwk-list--li-content">
-            ${item.formData.map(e => `
+            ${item.formData
+              .map(
+                (e) => `
               <div class="qwk-list--field">
                 <div class="qwk-list--item-field-value" data-name="${e.name}">${e.value}</div>    
               </div>
-            `).join("")}
+            `
+              )
+              .join("")}
           </div>`
-          )}
+        }
 
+        ${
+          this.showActions
+            ? `
+          <div class="qwk-list--actions">
+            <button class="qwk-list--action-btn qwk-list--action-btn-remove" data-id="${item.id}"></button>
+            ${!item.edit ? `<button class="qwk-list--action-btn qwk-list--action-btn-edit" data-id="${item.id}"></button>` : ""}
+          </div>`
+            : ""
+        }
 
-        <div class="qwk-list--actions">
-          <button class="qwk-button qwk-button--remove-item" data-id="${item.id}">Remove</button>
-          ${!item.edit ? `<button class="qwk-button qwk-button--edit-item" data-id="${item.id}">edit</button>` : ""}
-        </div>
-      </li>`).join("")}`;
+      </li>`
+      )
+      .join("")}`;
 
     const html = `
       <div class="qwk-list">
@@ -302,7 +349,12 @@ class QuickList {
           ${li}
         </${this.listType}>
 
-        <button id="saveList" class="qwk-button ${this.submitListButtonClass}">send to service</button>
+
+        ${
+          this.showSubmit
+            ? `<button id="saveList" class="qwk-button ${this.submitListButtonClass}">send to service</button>`
+            : ""
+        }
       </div>
     `;
 
